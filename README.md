@@ -1,6 +1,6 @@
 # Mercado_De_Produtos
 
-<br/>Um sistema web de cadastro de produtos, categorias e fornecedores com PHP, Javascript, CSS, BootStrap sem orientação a objeto na integração do Banco de Dados MySQL.
+<br/>Um sistema web de cadastro de produtos, categorias e fornecedores com PHP, MySQL, Javascript, CSS, BootStrap sem orientação a objeto na integração do Banco de Dados MySQL.
 <br/><br/>ATUALIZAÇÕES E CORREÇÕES DE BUGS:
 <br/><b>Versão 1.0</b>
 <br/>1.Arquivos Header e Footer separados.
