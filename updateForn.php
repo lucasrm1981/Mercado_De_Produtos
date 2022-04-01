@@ -9,16 +9,17 @@ if(!isset($_SESSION["email"])==true){
 include "assets/src/cfg.php";
 //### Recebimento do POST do formulario ###
   // recebe os campos do form
-  $produtoID = $_POST['produtoID'];
-  $produtoNome = $_POST['produtoNome'];
-  $quantidade = $_POST['quantidade'];
-  $preco = $_POST['preco'];
-  $categoriaID = $_POST['categoriaID'];  
-  $fornecedorID = $_POST['fornecedorID'];  
+  $fornecedorID = $_POST['fornecedorID'];
+  $nomeFantasia = $_POST['nomeFantasia'];
+  $razaoSocial = $_POST['razaoSocial'];
+  $ie = $_POST['ie'];
+  $cnpj = $_POST['cnpj'];  
+  $cnae = $_POST['cnae'];  
+  $endereco = $_POST['endereco'];  
 
-$updateProduto =  "UPDATE produtos SET produtoNome='$produtoNome', fornecedorID='$fornecedorID', categoriaID='$categoriaID', quantidade='$quantidade', preco=$preco WHERE produtoID = '$produtoID'";
+$updateFornecedor =  "UPDATE fornecedores SET nomeFantasia='$nomeFantasia', razaoSocial='$razaoSocial', ie='$ie', cnpj='$cnpj', cnae=$cnae, endereco=$endereco WHERE fornecedorID = '$fornecedorID'";
 
-if(mysqli_query($con,$updateProduto)){
+if(mysqli_query($con,$updateFornecedor)){
         $msg = "Atualizado com sucesso!";
         $type = "success"; 
     }
@@ -43,7 +44,7 @@ if(mysqli_query($con,$updateProduto)){
           timer: 2000          
         },
         function(){
-          window.location.href = 'produtos.php';
+          window.location.href = 'fornecedores.php';
     })
         </script>
         

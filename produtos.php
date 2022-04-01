@@ -1,4 +1,10 @@
 <?php
+
+// Verifica se o login foi criado
+session_start();
+if(!isset($_SESSION["email"])==true){
+  header("location: login.php");
+}
 // Arquivo de Configuracao com o Banco de Dados
 include "assets/src/cfg.php";
 
@@ -279,6 +285,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 </div>
+<!-- Final do Modal -->
+
 		  <button  class="btn btn-danger" onclick="excluir(<?php echo $rowListProd['produtoID']; ?>)">EXCLUIR
       </button>
     </td>

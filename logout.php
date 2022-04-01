@@ -1,24 +1,14 @@
 <?php
-// Verifica se o login foi criado
+// Deleta o conteúdo da seção que foi aberta no Login
 session_start();
-if(!isset($_SESSION["email"])==true){
-  header("location: login.php");
-}
+session_destroy();
+unset( $_SESSION );
+
 // Arquivo de Configuracao com o Banco de Dados
-include "assets/src/cfg.php";
 
-$ProdutoID = $_GET["ProdutoID"];
+$msg = "Logout Efetuado!";
+$type = "success";
 
-    $delProd = "delete from produtos where ProdutoID = ".$ProdutoID;
-
-    if(mysqli_query($con,$delProd)){
-        $msg = "Deletado com sucesso!";
-        $type = "success"; 
-    }else{
-        $msg = "Erro ao deletar!";
-        $type = "error"; 
-    }
-   
     echo "
     <html>
     <head>
@@ -35,7 +25,7 @@ $ProdutoID = $_GET["ProdutoID"];
       timer: 2000          
     },
     function(){
-      window.location.href = 'produtos.php';
+      window.location.href = 'login.php';
 })
     </script>    
     </body>

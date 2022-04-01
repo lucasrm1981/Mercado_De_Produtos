@@ -7,11 +7,11 @@ if(!isset($_SESSION["email"])==true){
 // Arquivo de Configuracao com o Banco de Dados
 include "assets/src/cfg.php";
 
-$ProdutoID = $_GET["ProdutoID"];
+$categoriaID = $_GET["categoriaID"];
 
-    $delProd = "delete from produtos where ProdutoID = ".$ProdutoID;
+    $delCat = "delete from categorias where categoriaID = ".$categoriaID;
 
-    if(mysqli_query($con,$delProd)){
+    if(mysqli_query($con,$delCat)){
         $msg = "Deletado com sucesso!";
         $type = "success"; 
     }else{
@@ -35,7 +35,7 @@ $ProdutoID = $_GET["ProdutoID"];
       timer: 2000          
     },
     function(){
-      window.location.href = 'produtos.php';
+      window.location.href = 'categorias.php';
 })
     </script>    
     </body>

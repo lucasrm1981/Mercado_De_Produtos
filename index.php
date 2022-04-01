@@ -1,4 +1,9 @@
 <?php
+// Verifica se o login foi criado
+session_start();
+if(!isset($_SESSION["email"])==true){
+  header("location: login.php");
+}
 // Arquivo de Configuracao com o Banco de Dados
 include "assets/src/cfg.php";
 
@@ -19,7 +24,10 @@ $rowListCat = mysqli_fetch_array($resultListCat);
 $consultaForn = "SELECT * FROM fornecedores";	
 $resultListForn = mysqli_query($con,$consultaForn);
 $rowListForn = mysqli_fetch_array($resultListForn);
-
+//}
+//else{
+//  header("location: login.php");
+//}
 ?>
 
 <html lang="pt-BR">
@@ -175,7 +183,9 @@ $rowListForn = mysqli_fetch_array($resultListForn);
   </section>
 </main>
 
-<?php include "footer.php"; ?>
+<?php include "footer.php"; 
+
+?>
       
   </body>
 </html>
