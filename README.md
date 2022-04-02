@@ -10,3 +10,8 @@
 <br/>5.Utilização de ícones no formato SVG.
 <br/>6.Alertas utilizando o Sweet Alert
 <br/>7.Formulários com utilização de Modal
+
+<br/><b>Versão 2.0</b>
+<br/>Criação das partes de criação POST REQUEST, atualização e deleção(arquivos separados) de fornecedores e categorias.
+<br/>Autenciação via login com seção e senha com hash de criptografia MD5 com a parte de logout
+<br/>Verificação em todos os arquivos se o usuário está logado com redirect caso não esteja.
