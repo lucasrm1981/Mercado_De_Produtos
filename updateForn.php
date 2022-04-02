@@ -17,7 +17,7 @@ include "assets/src/cfg.php";
   $cnae = $_POST['cnae'];  
   $endereco = $_POST['endereco'];  
 
-$updateFornecedor =  "UPDATE fornecedores SET nomeFantasia='$nomeFantasia', razaoSocial='$razaoSocial', ie='$ie', cnpj='$cnpj', cnae=$cnae, endereco=$endereco WHERE fornecedorID = '$fornecedorID'";
+$updateFornecedor =  "UPDATE fornecedores SET nomeFantasia='$nomeFantasia', razaoSocial='$razaoSocial', ie=$ie, cnpj=$cnpj, cnae=$cnae, endereco='$endereco' WHERE fornecedorID = $fornecedorID";
 
 if(mysqli_query($con,$updateFornecedor)){
         $msg = "Atualizado com sucesso!";

@@ -213,8 +213,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<label class="form-label">Nome da Categoria</label>
 		<input type="text" class="form-control" name="categoriaNome" value="<?php echo $rowListCat['categoriaNome']; ?>">
 		
-		<label class="form-label">Status</label>
-		<input type="text" class="form-control" name="status" value="<?php echo $rowListCat['status']; ?>">
+
+    <label class="form-label">Status</label>
+		
+		<select class="form-select" aria-label="Default" name="status">
+		<option >Escolha a categoria.</option>
+	
+        <!-- Se o status da categoria estiver como 0 desabilitada ela desabilita a seleção -->		  
+		  <option value="<?php echo $rowListCat['status']; ?>" selected ><?php echo $rowListCat['status']=='1'?'Habilitada':'Desabilitada'; ?>
+    </option>
+      
+      <option value="<?php echo $rowListCat['status']=='1'?'0':'1'; ?>"> 
+      <?php echo $rowListCat['status']=='1'?'Desabilitada':'Habilitada'; ?>
+    </option>		  
+		  
+		</select>
 
 
 	  </div>
@@ -261,7 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<label class="form-label">Status</label>
 		
 		<select class="form-select" aria-label="Default" name="status">
-		<option >Escolha a categoria.</option>
+		<option >Status a categoria.</option>
 		
         <!-- Se o status da categoria estiver como 0 desabilitada ela desabilita a seleção -->		  
 		  <option value="1" >Habilitada </option>

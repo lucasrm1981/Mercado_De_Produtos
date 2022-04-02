@@ -212,7 +212,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Atualizar Produto <?php echo $rowListForn['razaoSocial']; ?></h4>
+        <h4 class="modal-title">Atualizar Fornecedor <?php echo $rowListForn['razaoSocial']; ?></h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
