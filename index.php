@@ -92,9 +92,33 @@ $rowListForn = mysqli_fetch_array($resultListForn);
   margin-top: 30px;
   height: 1500px; /* Used in this example to enable scrolling */
 }
-    </style>
-
  
+#myInput {
+  background-image: url('css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+</style>
+
+<!-- Criação de filtro dos produtos-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
     
   </head>
   <body>  
@@ -104,14 +128,20 @@ $rowListForn = mysqli_fetch_array($resultListForn);
 
 <main>
   <section class="py-5 text-center container">
+    <!-- Input com Filtro dos Produtos -->
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Filtrar Produtos..." title="Digite algo">
 <div class="container text-center" >
 <div class="row">
 <div class="col-sm-12">
-    <table class="table text-center align-middle">
+  <div class="text-align">
+
+</div>
+    <table class="table text-center align-middle"  id="myTable">
 	  <thead>
 		<tr>
 		  <th scope="col">#</th>
       <th scope="col">ID</th>
+      <th scope="col">Imagem</th>
 		  <th scope="col">Produto</th>
 		  <th scope="col">Quantidade</th>
 		  <th scope="col">Preço</th>
@@ -129,6 +159,7 @@ $rowListForn = mysqli_fetch_array($resultListForn);
 			
 		  <th scope="row"><?php echo $i++ ?></th>
       <td><?php echo $rowListProd['produtoID']; ?></td>
+      <td><img src="uploads/<?php echo $rowListProd['produtoImagem']==''?'padrao.jpg':$rowListProd['produtoImagem'] ?>" width="32" heigth="32"> </td>
 		  <td><?php echo $rowListProd['produtoNome']; ?></td>
 		  <td><?php echo $rowListProd['quantidade']; ?></td>
 		  <td><?php echo $rowListProd['preco']; ?></td>
@@ -173,7 +204,7 @@ $rowListForn = mysqli_fetch_array($resultListForn);
 		
 	  </tbody>
 	</table>
-	
+
 </div>	
 
 

@@ -16,7 +16,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $preco = $_POST['preco'];
   $categoriaID = $_POST['categoriaID'];
   $fornecedorID = $_POST['fornecedorID'];
+
+  $foto = $_FILES['produtoImagem'];
   
+  // Se a foto estiver sido selecionada
+  if (!empty($foto["name"])) {
+        
+    // Largura máxima em pixels
+    $largura = 400;
+    // Altura máxima em pixels
+    $altura = 400;
+    // Tamanho máximo do arquivo em bytes
+    $tamanho = 20000;
+
+    $error = 0;
+
+    // Verifica se o arquivo é uma imagem
+    if(!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $foto["type"])){
+      $msg = "Arquivo Inválido";
+      $type = "error";
+      $error = 1;
+        } 
+
+    // Pega as dimensões da imagem
+    $dimensoes = getimagesize($foto["tmp_name"]);
+
+    // Verifica se a largura da imagem é maior que a largura permitida
+    if($dimensoes[0] > $largura) {
+        $msg = "A largura da imagem não deve ultrapassar ".$largura." pixels";
+        $type = "error";
+        $error = 1;        
+    }
+    // Verifica se a altura da imagem é maior que a altura permitida
+    if($dimensoes[1] > $altura) {
+        $msg = "Altura da imagem não deve ultrapassar ".$altura." pixels";
+        $type = "error";
+        $error = 1;
+    }
+    
+    // Verifica se o tamanho da imagem é maior que o tamanho permitido
+    if($foto["size"] > $tamanho) {
+            $msg = "A imagem deve ter no máximo ".$tamanho." bytes";
+            $type = "error";
+            $error = 1;
+    }
+    // Se não houver nenhum erro
+    if ($error == 0) {
+    
+        // Pega extensão da imagem
+        preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $foto["name"], $ext);
+        // Gera um nome único para a imagem
+        $nome_imagem = md5(uniqid(time())) . "." . $ext[1];
+        // Caminho de onde ficará a imagem
+        $caminho_imagem = "uploads/" . $nome_imagem;
+        // Faz o upload da imagem para seu respectivo caminho
+        move_uploaded_file($foto["tmp_name"], $caminho_imagem);
+    
   //Executar o teste com o echo para verificar se o form esta passando os dados corretamente, para depois montar a parte do insert.
  //echo "$produtoNome $quantidade $preco";
  
@@ -24,27 +79,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $consultaProd = "SELECT * FROM produtos";	
 $resultListProd = mysqli_query($con,$consultaProd);
 $rowListProd = mysqli_fetch_array($resultListProd); 
-$novoProduto =  "INSERT INTO produtos  VALUES (null,'$produtoNome', $fornecedorID, $categoriaID, $quantidade, $preco)";
+
+$novoProduto =  "INSERT INTO produtos  VALUES (null,'$produtoNome', $fornecedorID, $categoriaID, $quantidade, $preco,'$nome_imagem')";
 //Linha retirada depois de acrescentar o if
 //$inserirProd = mysqli_query($con,$novoProduto);
 
       // Busca os produtos no banco de dados.
       $verificaProd = "SELECT produtoNome FROM produtos WHERE produtoNome='$produtoNome'";	
-      $verificaList = mysqli_query($con,$verificaProd);
-
+      $verificaList = mysqli_query($con,$verificaProd);    
+     
 if(mysqli_query($con,$novoProduto)){
         $msg = "Gravado com sucesso!";
         $type = "success";		
     }
-    else if(mysqli_num_rows($verificaList)>0){
+    if(mysqli_num_rows($verificaList)>0){
         $msg = "Produto Existente!"; 
         $type = "error";       
-    }
-    else{
-      $msg = "Erro ao Gravar!";   
-      $type = "error";  
-    }
-	
+    }  
+  }	
+  
+}
+if (empty($foto["name"])) {
+  $msg = "Você não Escolheu uma Imagem!"; 
+      $type = "error"; 
+}
 }
 
 //### FIM - Recebimento do POST do formulario ###
@@ -150,7 +208,9 @@ $rowListForn = mysqli_fetch_array($resultListForn);
 }
             
         </script>
-    
+
+
+   
   </head>
   <body>
   
@@ -164,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       icon: '".$type."',
       title: '".$msg."',
       showConfirmButton: false,
-      timer: 1500
+      timer: 3000
     })
     </script>";
     }
@@ -306,8 +366,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="col-4">
 <label class="form-label"><strong>Cadastrar Novo Produto</strong> </label>
   <!-- Envia toda informação do formulário para o mesmo arquivo -->
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
 	  <div class="mb-3">
+
+    <label class="form-label">Imagem do Produto</label>
+		<input type="file" class="form-control" name="produtoImagem" value="<?php echo $produtoNome;?>" >
+
 		<label class="form-label">Produto</label>
 		<input type="text" class="form-control" name="produtoNome">
 		
@@ -354,7 +418,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 	  </div>
 	  
-	  <button type="submit" class="btn btn-primary">Enviar</button>
+	  <button type="submit" class="btn btn-primary" >Enviar</button>
 	  
 </form>
 </div>
